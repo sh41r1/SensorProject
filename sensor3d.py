@@ -6,10 +6,8 @@ import random as rn
 
 class Point:
     point_count=0
-    x=0
-    y=0
-    z=0
-    def __init__(self,X,Y,Z):
+
+    def __init__(self,X=0,Y=0,Z=0):
         self.x=X
         self.y=Y
         self.z=Z
@@ -56,15 +54,11 @@ class Sensor:
 	nodeId=-1
 	sensor_count=0
 	location=Point(0,0,0)
-	Ec=0
-	Cr=0
-	Sr=0
-	netForce=0
 	nodeType=0 # 0 mean normal node, 1 is centriod , 2 is cluster head
 	cellId=-1
 	status=0	# 0 mean sleeping, 1 mean active
-	
-	def __init__(self,nodeId,location,Ec,Cr,Sr,netForce=0,nodeType=0,cellId=-1,status=0):
+
+	def __init__(self,nodeId,location,Ec=0,Cr=0,Sr=0,netForce=0,nodeType=0,cellId=-1,status=0):
 		self.nodeId=nodeId
 		self.location=location
 		self.Ec=Ec
@@ -182,35 +176,32 @@ def checkSensorLocationInCell(location,cell):
 sensorsContainer=[]
 cellContainer=[]
 initialElectricCharge=50 # initial value for electric charge
-cRange=20	# Communication range 
-sRange=6	# Sensing range 
+cRange=20	# Communication range
+sRange=6	# Sensing range
 nSensors=1000 # Number of sesors
 space_dimension=space_x=space_y=space_z=100 # space dimension
 
-sensorsContainer=createSensors(nSensors,initialElectricCharge,cRange,sRange)
-#for s in sensorsContainer:
-#	s.printInfo()
-centriod_index=selectCentriod(sensorsContainer,space_x,space_y,space_z)
-# sensorsContainer[centriod_index].nodeType=1
+def runSimulation():
+    sensorsContainer=createSensors(nSensors,initialElectricCharge,cRange,sRange)
+    #for s in sensorsContainer:
+    #	s.printInfo()
+    centriod_index=selectCentriod(sensorsContainer,space_x,space_y,space_z)
+    # sensorsContainer[centriod_index].nodeType=1
 
-cellContainer=createCells(space_dimension,cRange)
-print ('Total Number of Cell Created {}'.format(Cell.cell_count))
-assignCellToSensors(cellContainer,sensorsContainer)
-print('Space Dimenssion : {} * {} * {}'.format(space_x,space_y,space_z))
-print('Total Number of Cells: {}'.format(len(cellContainer)))
-for s in sensorsContainer:
-	s.printInfo()
-#f = open("cell.txt", "w")
-with open("cell.txt", "w") as f:
-	for c in cellContainer:
-		f.write(c.toString())
-#f.close()
-# for c in range(0,100):
-# 	print(checkSensorLocationInCell(Point(2,1,1),cellContainer[c]))
+    cellContainer=createCells(space_dimension,cRange)
+    print ('Total Number of Cell Created {}'.format(Cell.cell_count))
+    assignCellToSensors(cellContainer,sensorsContainer)
+    print('Space Dimenssion : {} * {} * {}'.format(space_x,space_y,space_z))
+    print('Total Number of Cells: {}'.format(len(cellContainer)))
+    for s in sensorsContainer:
+    	s.printInfo()
+    #f = open("cell.txt", "w")
+    with open("cell.txt", "w") as f:
+    	for c in cellContainer:
+    		f.write(c.toString())
+    #f.close()
+    # for c in range(0,100):
+    # 	print(checkSensorLocationInCell(Point(2,1,1),cellContainer[c]))
 
-
-
-
-
-
-
+if __name__ == '__main__':
+    runSimulation()
