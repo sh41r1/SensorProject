@@ -6,10 +6,8 @@ import random as rn
 
 class Point:
     point_count=0
-    x=0
-    y=0
-    z=0
-    def __init__(self,X,Y,Z):
+
+    def __init__(self,X=0,Y=0,Z=0):
         self.x=X
         self.y=Y
         self.z=Z
@@ -63,7 +61,7 @@ class Sensor:
 	nodeType=0 # 0 mean normal node, 1 is centriod , 2 is cluster head
 	cellId=-1
 	status=0	# 0 mean sleeping, 1 mean active
-	
+
 	def __init__(self,nodeId,location,energy,Cr,Sr,netForce=0,nodeType=0,cellId=-1,status=0):
 		self.nodeId=nodeId
 		self.location=location
@@ -189,7 +187,7 @@ def calculateNetForce(container,centriod,dth):
 			repulsion_force=0
 			for s2 in container:
 				d=distance(s1.location,s2.location)
-				if s1.nodeId != s2.nodeId:  
+				if s1.nodeId != s2.nodeId:
 					if d <= dth:
 						repulsion_force = repulsion_force + calculateForce(d,s1.energy,s2.energy)
 		s1.netForce=repulsion_force- attraction_force
@@ -222,35 +220,30 @@ def selectClusterHead(container):
 sensorsContainer=[]
 cellContainer=[]
 initialEnergy=50 # initial value for electric charge
-cRange=15	# Communication range 
-sRange=6	# Sensing range 
+cRange=15	# Communication range
+sRange=6	# Sensing range
 nSensors=100 # Number of sesors
 space_dimension=space_x=space_y=space_z=50 # space dimension
 
-sensorsContainer=createSensors(nSensors,initialEnergy,cRange,sRange)
-centriod_index=selectCentriod(sensorsContainer,space_x,space_y,space_z)
-cellContainer=createCells(space_dimension,cRange)
+def runSimulation():
+    sensorsContainer=createSensors(nSensors,initialEnergy,cRange,sRange)
+    centriod_index=selectCentriod(sensorsContainer,space_x,space_y,space_z)
+    cellContainer=createCells(space_dimension,cRange)
 
-print ('Total Number of Cell Created {}'.format(Cell.cell_count))
-print('Space Dimenssion : {} * {} * {}'.format(space_x,space_y,space_z))
+    print ('Total Number of Cell Created {}'.format(Cell.cell_count))
+    print('Space Dimenssion : {} * {} * {}'.format(space_x,space_y,space_z))
 
-assignCellToSensors(cellContainer,sensorsContainer)
-calculateNetForce(sensorsContainer,sensorsContainer[centriod_index],cRange)
-selectClusterHead(sensorsContainer)
+    assignCellToSensors(cellContainer,sensorsContainer)
+    calculateNetForce(sensorsContainer,sensorsContainer[centriod_index],cRange)
+    selectClusterHead(sensorsContainer)
 
-for s in sensorsContainer:
-	s.printInfo()
-#f = open("cell.txt", "w")
-#with open("cell.txt", "w") as f:
-#	for c in cellContainer:
-#		f.write(c.toString())
-#f.close()
-# for c in range(0,100):
-# 	print(checkSensorLocationInCell(Point(2,1,1),cellContainer[c]))
+    for s in sensorsContainer:
+    	s.printInfo()
+    #with open("cell.txt", "w") as f:
+    #	for c in cellContainer:
+    #		f.write(c.toString())
+    # for c in range(0,100):
+    # 	print(checkSensorLocationInCell(Point(2,1,1),cellContainer[c]))
 
-
-
-
-
-
-
+if __name__ == '__main__':
+    runSimulation()
