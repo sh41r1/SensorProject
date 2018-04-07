@@ -239,11 +239,9 @@ def runSimulation():
 
     for s in sensorsContainer:
     	s.printInfo()
-    #f = open("cell.txt", "w")
     #with open("cell.txt", "w") as f:
     #	for c in cellContainer:
     #		f.write(c.toString())
-    #f.close()
     # for c in range(0,100):
     # 	print(checkSensorLocationInCell(Point(2,1,1),cellContainer[c]))
 
