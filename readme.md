@@ -1,6 +1,6 @@
 # Cryptoticker
 
-An simulation of a sensor network deployed in 3D.
+A simulation of a sensor network deployed in 3D.
 
 
 ## Introduction
